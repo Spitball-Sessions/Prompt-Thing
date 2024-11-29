@@ -1,0 +1,99 @@
+body {
+    background:#4398bd ;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    }
+
+p{
+    max-width: ;
+    }
+    
+input{
+    border-radius: 15px;
+    border: solid 0px;
+    width: 19vmax;
+    }
+
+.sidebar{
+    width: 50%;
+}
+
+#promptSilo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width:100%;
+}
+
+.queue{
+    display: flex;
+    flex-direction: column;
+    width:95%;
+    height:100vh;
+    padding: 5px;
+    }
+
+.queue>h1{
+    color: #04691d;
+    text-shadow: 0px 0px 3px #bbf1a0;
+    text-align: center;   
+    margin: 0px 0px 10px 0px;
+}
+
+.queue:hover{
+    background-color:#1d5f7c;
+}
+
+.queue:hover>h1{
+    color:#bbf1a0;
+    text-shadow: 0px 0px 2px #04691d;
+}
+
+/*This is the CSS for the Queue Cards*/
+.card{
+    padding: 2vmin; 
+    border: solid #9e573a 2px;
+    background: #accfd5;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    }
+
+.card:hover{
+    box-shadow: 0px 0px 2px 2px #accfd5;    
+    }
+
+
+.promptName{
+    display: flex;
+    width:95%;
+    align-items: center;
+}
+
+.promptName input {
+    flex: 1;                  /* Allow the input to grow and take up the remaining space */
+    margin-left: 8px;         /* Add some spacing between the text and the input */
+    min-width: 0;             /* Prevent input from shrinking too much */
+  }
+
+
+.flex-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20vh;
+    }
+
+.flex-textarea{
+    flex: 1;
+    min-height: 100px;
+    max-height: 300px;
+    width: 33vw;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical; /* Optional: Allow user resizing */
+    overflow-y: auto;
+    }
