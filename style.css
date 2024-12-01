@@ -1,12 +1,36 @@
+:root{
+    --main-bg:#4398bd;
+    --dark-background:#1d5f7c;
+    --header-color:#04691d;
+    --header-color-light:#bbf1a0;
+    --brown-border-color: #9e573a;
+    --silver-border:silver double 2px;
+
+}
+
+html{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent overflow */
+    font-size: 12pt;
+}
+
 body {
-    background:#4398bd ;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background:var(--main-bg);
     align-items: center;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: clamp(40%,750px,50%) 1fr;
     }
 
 p{
-    max-width: ;
+    max-width: 16rem;
     }
     
 input{
@@ -15,48 +39,46 @@ input{
     width: 19vmax;
     }
 
-.sidebar{
-    width: 50%;
-}
-
-#promptSilo{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+#leftSidebar{
     width:100%;
-}
+    height:100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 50%));
+    }
 
 .queue{
     display: flex;
     flex-direction: column;
-    width:95%;
-    height:100vh;
-    padding: 5px;
+    gap: .5rem;
+    width:100%;
+    height: 100%;
+    align-items: center;
     }
 
 .queue>h1{
-    color: #04691d;
-    text-shadow: 0px 0px 3px #bbf1a0;
+    color: var(--header-color);
+    text-shadow: 0px 0px 3px var(--header-color-light);
     text-align: center;   
     margin: 0px 0px 10px 0px;
-}
+    }
 
 .queue:hover{
-    background-color:#1d5f7c;
-}
+    background-color:var(--dark-background);
+    }
 
 .queue:hover>h1{
-    color:#bbf1a0;
+    color:var(--header-color-light)
     text-shadow: 0px 0px 2px #04691d;
-}
+    }
 
 /*This is the CSS for the Queue Cards*/
 .card{
     padding: 2vmin; 
-    border: solid #9e573a 2px;
+    border: solid var(--brown-border-color) 2px;
     background: #accfd5;
     border-radius: 30px;
     display: flex;
+    width: min(20rem,20vw);
     flex-direction: column;
     text-align: center;
     }
@@ -70,30 +92,67 @@ input{
     display: flex;
     width:95%;
     align-items: center;
-}
+    }   
 
 .promptName input {
     flex: 1;                  /* Allow the input to grow and take up the remaining space */
     margin-left: 8px;         /* Add some spacing between the text and the input */
     min-width: 0;             /* Prevent input from shrinking too much */
-  }
-
-
-.flex-container{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 20vh;
     }
 
-.flex-textarea{
+#rightSidebar{
+    margin-right: 2em;
+    width:100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 50%));
+    height:100%;
+    }
+
+#inputHeader{
+    margin: 0px 0px 4px 0px;
+    color:var(--header-color);
+    text-shadow: 0px 0px 3px var(--header-color-light);
+    text-align: center;   
+    margin: 0px 0px 10px 0px;
+    background-color: var(--main-bg);
+    width: 106.5%;
+    border: none;
+    border-bottom: var(--silver-border);
+}
+
+#upperSection{
+    height: 45%;
+    background-color: lightblue;
+    padding: 0px 5px;
+    border: var(--silver-border);
+    border-bottom: none;
+    }
+
+.textboxes{
+    border: var(--silver-border);
+    border-top: none;
+    background-color: lightblue;
+    height:min(50%, 30rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:.5rem;
+    padding:1em;
+    }
+
+.textboxes>button{
+    width: 6rem;
+    height: 2rem;
+    }
+
+.textboxes>textarea{
     flex: 1;
-    min-height: 100px;
-    max-height: 300px;
-    width: 33vw;
+    width: min(20rem,20vw);
     padding: 10px;
-    border: 1px solid #ccc;
+    background-color: #FFFFFF;
+    border: 1px solid  var(--brown-border-color);
     border-radius: 5px;
     resize: vertical; /* Optional: Allow user resizing */
     overflow-y: auto;
+    box-shadow: 0px 0px 6px 2px inset var(--brown-border-color);
     }
