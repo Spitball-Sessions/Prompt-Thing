@@ -29,9 +29,7 @@ body {
     grid-template-columns: clamp(40%,750px,50%) 1fr;
     }
 
-p{
-    max-width: 16rem;
-    }
+
     
 input{
     border-radius: 15px;
@@ -73,7 +71,7 @@ input{
 
 /*This is the CSS for the Queue Cards*/
 .card{
-    padding: 2vmin; 
+    padding: .75rem; 
     border: solid var(--brown-border-color) 2px;
     background: #accfd5;
     border-radius: 30px;
@@ -81,22 +79,27 @@ input{
     width: min(20rem,20vw);
     flex-direction: column;
     text-align: center;
+    font-size: 11pt;
     }
 
 .card:hover{
     box-shadow: 0px 0px 2px 2px #accfd5;    
     }
 
+.card>p{
+    max-width: 20rem;
+    font-size: 10pt;
+    }
 
 .promptName{
     display: flex;
-    width:95%;
+    width:19em;
     align-items: center;
     }   
 
 .promptName input {
     flex: 1;                  /* Allow the input to grow and take up the remaining space */
-    margin-left: 8px;         /* Add some spacing between the text and the input */
+    margin-left: 10px;         /* Add some spacing between the text and the input */
     min-width: 0;             /* Prevent input from shrinking too much */
     }
 
