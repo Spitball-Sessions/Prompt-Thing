@@ -10,19 +10,19 @@
 
 html{
     width: 100%;
-    height: 100%;
+    min-height:max(100%,720px);
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent overflow */
     font-size: 12pt;
+    scrollbar-gutter: stable; /* Reserves space for the scrollbar */
+    overflow-y: auto; /* Ensures a scrollbar is always available */
 }
 
 body {
     width: 100%;
-    height: 100%;
+    min-height: max(100%,720px);
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background:var(--main-bg);
     align-items: center;
     display: grid;
@@ -109,6 +109,7 @@ input{
     display: grid;
     grid-template-columns: repeat(2, minmax(320px, 50%));
     height:100%;
+    padding-right:20px;
     }
 
 #inputHeader{
@@ -123,24 +124,17 @@ input{
     border-bottom: var(--silver-border);
 }
 
-#upperSection{
-    height: 45%;
-    background-color: lightblue;
-    padding: 0px 5px;
-    border: var(--silver-border);
-    border-bottom: none;
-    }
-
-.textboxes{
+.textboxes, #upperSection{
     border: var(--silver-border);
     border-top: none;
     background-color: lightblue;
-    height:min(50%, 30rem);
+    min-height:min(45%, 30rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap:.5rem;
     padding:1em;
+
     }
 
 .textboxes>button{
@@ -148,14 +142,18 @@ input{
     height: 2rem;
     }
 
-.textboxes>textarea{
-    flex: 1;
+.flex-textarea{
     width: min(20rem,20vw);
     padding: 10px;
     background-color: #FFFFFF;
+    min-height: 10rem;
     border: 1px solid  var(--brown-border-color);
     border-radius: 5px;
     resize: vertical; /* Optional: Allow user resizing */
     overflow-y: auto;
     box-shadow: 0px 0px 6px 2px inset var(--brown-border-color);
     }
+
+#saveButtons{
+    gap: 20px;
+}
