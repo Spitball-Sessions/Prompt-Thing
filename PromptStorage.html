@@ -32,13 +32,16 @@
 
         </div>
         <div id = "farRightColumn" class = "column">
-            <div id = "upperSection" class = "pseudo"></div>
+            <div id = "upperSection" class = "pseudo">
+                <textarea name="promptDisplay" id="promptDisplay" class="flex-textarea" style="font-size: 9pt;"></textarea>
+                <button id = "copyPrompt">Copy</button>
+            </div>
             <div id = "promptBoxes" class = "textboxes flex-container">
                 <h2 id = "inputHeader" class="labels">Inputs</h2>
-                <textarea name="promptDisplay" id="promptDisplay" class="flex-textarea"></textarea>
-                    <button id = "copyPrompt">Copy</button>
+
                 <textarea name="promptInput" id="promptInput" class="flex-textarea"></textarea>
-                    <button id = "savePrompt">Store Prompt</button>
+                    <span id = "saveButtons"><button id = "savePositive">Positive Prompt</button>
+                    <button id = "saveNegative">Negative Prompt</button></div></span>
             </div>
         </div>
     </div>
