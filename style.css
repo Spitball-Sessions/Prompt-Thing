@@ -21,14 +21,13 @@ html{
 body {
     width: 100%;
     min-height: max(100%,720px);
-    margin: 0;
+    margin-left: -3px;
     padding: 0;
     background:var(--main-bg);
     align-items: center;
     display: grid;
     grid-template-columns: clamp(40%,750px,50%) 1fr;
     }
-
 
     
 input{
@@ -156,4 +155,22 @@ input{
 
 #saveButtons{
     gap: 20px;
+}
+
+button{
+    background-color: var(--header-color-light);
+    color: var(--header-color)
+}
+
+#copyPrompt{
+    border-radius: 10px;
+    
+}
+
+#savePositive{
+    border-radius: 10px 0px 0px 10px;
+}
+
+#saveNegative{
+    border-radius: 0px 10px 10px 0px;
 }
