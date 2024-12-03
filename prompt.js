@@ -77,18 +77,22 @@ function copyPromptCardToDisplay(event){
 }
 
 function savePositivePrompt(event){
-    text = document.getElementById("promptInput").value;
+    let input = document.getElementById("promptInput")
+    let text = input.value;
     let child = q.posQueue.lastElementChild.id;
     let prefix = "positive";
     paragraph = createNewPrompt(child,prefix); 
     paragraph.textContent = text;
+    input.value = "";
 } 
 function saveNegativePrompt(event){
-    text = document.getElementById("promptInput").value;
+    let input = document.getElementById("promptInput")
+    let text = input.value;
     let child = q.negQueue.lastElementChild.id;
     let prefix = "negative";
     paragraph = createNewPrompt(child,prefix);
     paragraph.textContent = text;
+    input.value = "";
 }
 
 function labelPromptCards(event){
