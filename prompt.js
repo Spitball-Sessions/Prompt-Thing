@@ -1,4 +1,17 @@
+const debug = true
 
+function db(input) {
+    if (debug) console.log(input);
+}
+
+//basic default setter method
+function englishSetter(input){
+    if (input.trim() !== ""){
+        return input.trim();
+    }
+}
+
+//gets HTML elements.  probably more than needed.
 function getElements(){
     const leftSide = document.getElementById("leftSidebar")
     const posQueue = document.getElementById("positiveQueue");
@@ -10,24 +23,52 @@ function getElements(){
     return{posQueue,negQueue,promptInputs,leftSide,promptDisplay,saveNeg,savePos}
 };
 
-function createNewPrompt(child, prefix){
+function createArrays(){
+    const posPrompts = [];
+    const negPrompts = [];
+    return {posPrompts,negPrompts}
+}
 
+class Prompt {
+    constructor(name,promptText,type,description=""){
+        this.name = name;
+        this._description = description;
+        this._promptText = promptText;
+        this.type = type;
+    }
+
+    set promptText(input){
+        this._promptText = englishSetter(input).concat("",",");
+        }
+
+    set description(input){
+        this._description = englishSetter(input);
+    }
+
+    get promptText(){
+        return this._promptText;
+    }
+
+    get description(){
+        return this._description;
+    }
+}
+
+
+function createNewPrompt(child, prefix){
     let newPosition = 0
     positionNumber = String(child).slice(-1);
     /*since all the HTML id's are shorthanded to 'pos' and 'neg', 
     this will append the correct queue based on the function entered from */
     let shortPrefix = prefix.slice(0,3);
-    console.log(shortPrefix);
 
     if(positionNumber != "r"){
         newPosition = parseInt(positionNumber) + 1;
-        console.log(newPosition);
     }
     else{//if no cards exist, last child will be header, so last letter of the tag will be 
         newPosition = 1
-        console.log(newPosition);
     }
-
+    
     const newCard = document.createElement("div");
     newCard.setAttribute("id",shortPrefix+ "Card" + newPosition);
     newCard.classList.add(prefix, "card");
@@ -58,9 +99,11 @@ function createNewPrompt(child, prefix){
     return p
 }
 
+//store prompts in arrays
 
 
 const q = getElements();
+const {posPrompts,negPrompts} = createArrays();
 
 function copyPromptCardToDisplay(event){
     const card = event.target.closest(".card")
@@ -77,21 +120,24 @@ function copyPromptCardToDisplay(event){
 }
 
 function savePositivePrompt(event){
-    let input = document.getElementById("promptInput")
-    let text = input.value;
-    let child = q.posQueue.lastElementChild.id;
-    let prefix = "positive";
-    paragraph = createNewPrompt(child,prefix); 
-    paragraph.textContent = text;
+    const input = document.getElementById("promptInput")
+    const lastCard = q.posQueue.lastElementChild.id;
+    const prompt = new Prompt(undefined,input.value,"positive","")
+    paragraph = createNewPrompt(lastCard,prompt.type); 
+    paragraph.textContent = prompt.promptText;
+    posPrompts.push(prompt);
+    db(posPrompts);
     input.value = "";
 } 
+
 function saveNegativePrompt(event){
-    let input = document.getElementById("promptInput")
-    let text = input.value;
-    let child = q.negQueue.lastElementChild.id;
-    let prefix = "negative";
-    paragraph = createNewPrompt(child,prefix);
-    paragraph.textContent = text;
+    const input = document.getElementById("promptInput")
+    const lastCard = q.negQueue.lastElementChild.id;
+    const prompt = new Prompt(undefined,input.value,"negative","")
+    paragraph = createNewPrompt(lastCard,prompt.type);
+    paragraph.textContent = prompt.promptText;
+    negPrompts.push(prompt);
+    db(negPrompts);
     input.value = "";
 }
 
