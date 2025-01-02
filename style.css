@@ -92,14 +92,15 @@ input{
 
 .promptName{
     display: flex;
-    width:19em;
+    max-width:20em;
     align-items: center;
+    color:ora
     }   
 
-.promptName input {
-    flex: 1;                  /* Allow the input to grow and take up the remaining space */
-    margin-left: 10px;         /* Add some spacing between the text and the input */
-    min-width: 0;             /* Prevent input from shrinking too much */
+.promptName input{
+    flex: 1;          /* Allow the input to grow and take up the remaining space */
+    margin-left: 10px;
+    width: 14em;     /* Prevent input from shrinking too much */
     }
 
 #rightSidebar{
