@@ -52,7 +52,7 @@ input{
     align-items: center;
     }
 
-.queue>h1{
+.sider>h1{
     color: var(--header-color);
     text-shadow: 0px 0px 3px var(--header-color-light);
     text-align: center;   

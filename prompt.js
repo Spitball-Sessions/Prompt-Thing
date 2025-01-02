@@ -7,7 +7,7 @@ function db(input) {
 //basic default setter method
 function englishSetter(input){
     if (input.trim() !== ""){
-        return input.trim();
+        return input.replace(/\n/g,"<br>").trim();
     }
 }
 
@@ -35,10 +35,10 @@ const {posPrompts,negPrompts} = (function (){
 
 
 class Prompt {
-    constructor(name,promptText,type,description=""){
+    constructor(name,promptText,type,description=""){  //(name = div Id, promptText = prompt text, type = queue name, description = Prompt Name)
         this.name = name;
-        this._description = description;
-        this._promptText = promptText;
+        this.description = description;
+        this.promptText = promptText;
         this.type = type;
     }
 
@@ -51,63 +51,47 @@ class Prompt {
 
 //temporary
 const prompt1 = new Prompt("posprompt1", "girl, intricate, detailed face, high res, photorealistic,upper body, close up, from above, looking up, night, back turned, looking back, pitch black, dark alleyway, graffiti wall, 1girl, backless short black dress, playful, allure, sensation, sultry, pouting, (masterpiece, high quality, best quality)","positive","Back Alley");
-const prompt2 = new Prompt("posprompt2","Aesthethic: {2.5D flat-color anime art. draped in shadows with a ring lighting to enhances her unique features.}/nForeground: {A woman with a bright and wispy ethereal mist surrounding her body. The mist creates a dramatic and surreal effect. The girl is wearing an intricate and tattered gown. The bottom of the gown is covered in blood. The woman's face has a blank and cold expression, her eyes are covered by her long blue hair. Holding finger to lips, shush, shushing motion}/nBackground: {A neon-lit night cityscape filled with a swarm of flying doves. The city has large futuristic buildings and strong contrast between light and shadows. There is a hint of danger and intrigue.}","positive","cyberpunk");
+const prompt2 = new Prompt("posprompt2","Aesthethic: {2.5D flat-color anime art. draped in shadows with a ring lighting to enhances her unique features.}<br>Foreground: {A woman with a bright and wispy ethereal mist surrounding her body. The mist creates a dramatic and surreal effect. The girl is wearing an intricate and tattered gown. The bottom of the gown is covered in blood. The woman's face has a blank and cold expression, her eyes are covered by her long blue hair. Holding finger to lips, shush, shushing motion}<br>Background: {A neon-lit night cityscape filled with a swarm of flying doves. The city has large futuristic buildings and strong contrast between light and shadows. There is a hint of danger and intrigue.}","positive","cyberpunk");
 posPrompts.push(prompt1,prompt2)
-db(posPrompts[1].name)
 prompt1.name = "negprompt1";
 prompt1.promptText = "low quality, medium quality, blurry, censored, blurry, censored, wrinkles, deformed,lowres, worst quality, normal quality, text, watermark, mutated, Bad art, mutation, deformed iris, deformed pupils, bad limbs, conjoined, featureless, messed up clothes, bad features, incorrect background, incorrect objects, cropped out face, messed up accessories, text in image, piercings, logo";
 prompt1.type = "negative";
 prompt1.description = "Basic Negative Prompt";
 negPrompts.push(prompt1);
-db(negPrompts[0].promptText)
 
 //convert to "create cards from prompts"
-function createNewPrompt(prompt, child){
-    let newPosition = 0;
-    let prefix = prompt.type;
-    positionNumber = String(child).slice(-1);
-    /*since all the HTML id's are shorthanded to 'pos' and 'neg', 
-    this will append the correct queue based on the function entered from */
-    let shortPrefix = prefix.slice(0,3);
+function wipeQueue(queueName){
+    queueName.innerHTML = "";
+}
 
-    if(positionNumber != "r"){
-        newPosition = parseInt(positionNumber) + 1;
-    }
-    else{//if no cards exist, last child will be header, so last letter of the tag will be 
-        newPosition = 1
-    }
+function createCards(card, index, _, queue){
 
-    idname = shortPrefix + "Card" + newPosition;
-    prompt.name = idname
-    db(prompt)
-
-    const newCard = document.createElement("div");
-    newCard.setAttribute("id",idname);
-    newCard.classList.add(prefix, "card");
+    let cardPosition = (index+1).toString();
+    let shortPrefix = card.type.slice(0,3)
+    db("cardPosition = " + cardPosition)
+    
+    const newCard=document.createElement("div");
+    newCard.setAttribute("id",shortPrefix + "Card" + cardPosition); //"posCard2"
+    newCard.classList.add(card.type,"card");
 
     const input = document.createElement("input");
-    input.setAttribute("id",shortPrefix+"Name"+newPosition);
+    input.setAttribute("id",shortPrefix+"Name"+cardPosition);
 
     const span = document.createElement("span");
     span.classList.add("promptName");
-    span.setAttribute("id",shortPrefix+"promptName"+newPosition)
+    span.setAttribute("id",shortPrefix+"promptName"+cardPosition)
     span.textContent = "Prompt Name:";
 
-    newCard.appendChild(span);
-    span.appendChild(input);
+    newCard.appendChild(span)
+    span.appendChild(input)
 
     const p = document.createElement("p");
-    p.setAttribute("id",shortPrefix+"Prompt"+newPosition);
+    p.setAttribute("id",shortPrefix+"Prompt"+cardPosition);
     p.classList.add("promptText");
+    p.innerHTML = card.promptText;
     newCard.appendChild(p);
-    if(shortPrefix == "neg"){
-        negQueue.appendChild(newCard);
-    }
-    else{
-        posQueue.appendChild(newCard);
-    }
 
-    return p
+    queue.appendChild(newCard)
 }
 
 function copyPromptCardToDisplay(event){
@@ -123,8 +107,6 @@ function copyPromptCardToDisplay(event){
         return
     }
 }
-
-
 
 function labelPromptCards(event){
     if(event.key === "Enter"){
@@ -143,16 +125,25 @@ function labelPromptCards(event){
 function savePrompt(type){
     const input = document.getElementById("promptInput");
     const prompt = new Prompt(undefined,input.value,type,"");
+    db(JSON.stringify(prompt.promptText))
     if (type === "positive"){
         posPrompts.push(prompt);
-        db(posPrompts);
+        wipeQueue(posQueue);
+        posPrompts.forEach((value,index,array)=>createCards(value,index,array,posQueue));
     } 
     else{
         negPrompts.push(prompt);
-        db(negPrompts);
+        wipeQueue(negQueue);
+        negPrompts.forEach((value,index,array)=>createCards(value,index,array,negQueue));
     }
     input.value = "";
 }
+
+//initializes Queues.
+wipeQueue(posQueue);
+posPrompts.forEach((value,index,array)=>createCards(value,index,array,posQueue));
+wipeQueue(negQueue);
+negPrompts.forEach((value,index,array)=>createCards(value,index,array,negQueue));
 
 queueContainer.addEventListener("dblclick", copyPromptCardToDisplay);
 
